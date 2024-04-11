@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
+const { format } = require('date-fns');
 require('dotenv').config(); 
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 const secretKey = process.env.JWT_SECRET_KEY;
 
 app.use(bodyParser.json());
@@ -67,16 +68,32 @@ app.post('/api/login', async (req, res) => {
 
 app.get('/api/rooms', verifyToken, async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).send('Usuário não autenticado');
+    let { startTime, endTime } = req.query;
+
+    if (!startTime || !endTime) {
+      return res.status(400).json({ error: 'Parâmetros incompletos' });
     }
+
+    startTime = new Date(startTime);
+    endTime = new Date(endTime);
+
     const connection = await connectToDatabase();
-    const [rows] = await connection.execute('SELECT * FROM rooms');
-    res.json(rows);
-    connection.end();
+    const query = `
+      SELECT * FROM rooms 
+      WHERE id NOT IN (
+        SELECT room_id FROM reservations 
+        WHERE
+          (start_time < ? AND end_time > ?) 
+          OR (start_time < ? AND end_time > ?) 
+          OR (start_time >= ? AND end_time <= ?)
+      )
+    `;
+
+    const [availableRooms] = await connection.query(query, [endTime, startTime, endTime, startTime, startTime, endTime]);
+    res.json(availableRooms);
   } catch (error) {
-    console.error('Erro ao buscar salas:', error);
-    res.status(500).send('Erro ao buscar salas');
+    console.error('Erro ao buscar salas disponíveis:', error);
+    res.status(500).json({ error: 'Erro ao buscar salas disponíveis' });
   }
 });
 
@@ -90,13 +107,38 @@ app.post('/api/reservations', verifyToken, async (req, res) => {
     if (!room_id || !date || !start_time || !end_time) {
       return res.status(400).send('Dados de reserva incompletos');
     }
+    
+    const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+    const formattedStartTime = format(new Date(start_time), 'HH:mm:ss');
+    const formattedEndTime = format(new Date(end_time), 'HH:mm:ss');
+
     const connection = await connectToDatabase();
-    await connection.execute('INSERT INTO reservations (user_id, room_id, date, start_time, end_time) VALUES (?, ?, ?, ?, ?)', [user_id, room_id, date, start_time, end_time]);
+    await connection.execute('INSERT INTO reservations (user_id, room_id, date, start_time, end_time, status) VALUES (?, ?, ?, ?, ?, ?)', [user_id, room_id, formattedDate, formattedStartTime, formattedEndTime, 'pending']);
     res.status(201).send('Reserva criada com sucesso');
     connection.end();
   } catch (error) {
     console.error('Erro ao fazer a reserva:', error);
     res.status(500).send('Erro ao fazer a reserva');
+  }
+});
+
+app.put('/api/reservations/:id', verifyToken, async (req, res) => {
+  try {
+    if (!req.user || req.user.role !== 'admin') {
+      return res.status(401).send('Acesso não autorizado');
+    }
+    const { id } = req.params;
+    const { status } = req.body;
+    if (!id || !status) {
+      return res.status(400).send('Dados incompletos');
+    }
+    const connection = await connectToDatabase();
+    await connection.execute('UPDATE reservations SET status = ? WHERE id = ?', [status, id]);
+    res.status(200).send('Status da reserva atualizado com sucesso');
+    connection.end();
+  } catch (error) {
+    console.error('Erro ao atualizar o status da reserva:', error);
+    res.status(500).send('Erro ao atualizar o status da reserva');
   }
 });
 
