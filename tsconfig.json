@@ -16,5 +16,10 @@
     "outDir": "./dist",
     "allowJs": true,
     "strictPropertyInitialization": false,
+  },
+  "include": ["src/**/*", "helpers"],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+    "files": true
   }
 }
