@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "es2018",
+    "module": "commonjs",
     "lib": ["es5", "es6", "ES2018"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
