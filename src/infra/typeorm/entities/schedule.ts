@@ -12,13 +12,11 @@ export class Schedule {
     @Column()
     name: string
 
-    @ManyToOne(() => User)
     @Column()
-    userId: UserModel
+    userId: string
 
-    @ManyToOne(() => Room)
     @Column()
-    roomId: RoomModel
+    roomId: string
 
     @Column()
     startToScheduling: Date
