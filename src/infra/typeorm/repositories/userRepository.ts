@@ -1,12 +1,4 @@
-import { IUserRepository } from "../../../data/userRespository.protocols";
-import { UserModel } from "../../../domain/model/user";
+import { AppDataSource } from "../../../data-source";
+import { User } from "../entities/user";
 
-class UserRepository implements IUserRepository {
-    async findUser(username: string, password: string): Promise<UserModel> {
-        const connection = 
-
-        return ''
-    }
-}
-
-export {UserRepository}
+export const userRepository = AppDataSource.getRepository(User)
