@@ -24,7 +24,7 @@ export class Schedule {
     @Column()
     endToScheduleing: Date
 
-    @Column()
+    @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
 
     @Column()

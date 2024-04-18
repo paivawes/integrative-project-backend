@@ -14,6 +14,6 @@ export class User {
     @Column()
     password: string
 
-    @Column()
+    @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
 }

@@ -11,6 +11,6 @@ export class Room {
     @Column()
     capacity: number
 
-    @Column()
+    @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
 }
