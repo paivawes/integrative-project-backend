@@ -5,12 +5,22 @@ export class UserController {
 
     async findAll(req: Request, res: Response) {
         try {
-
             const users = await userRepository.find();
+
             return res.status(200).json(users)
-            
-        } catch {
-            console.log('errorooooo')
+        } catch (error: any) {
+            return res.status(error.status).send(error);
+        }
+    }
+
+    async findById(req: Request, res: Response) {
+        try {
+            const { email, password, } = req.body;
+            //teste
+            const user = await userRepository.findOne({ where: { email: email, password: password } })
+            return res.status(200).json(user)
+        } catch (error: any) {
+            return res.status(error.status).send(error);
         }
     }
 
@@ -24,11 +34,7 @@ export class UserController {
                 password,
             })
 
-            console.log(user, 'u')
-
             const userCreate = userRepository.save(user)
-
-            console.log(userCreate, 'uc')
 
             return res.status(201).json(userCreate);
         } catch (error: any) {
