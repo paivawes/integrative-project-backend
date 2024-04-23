@@ -23,11 +23,11 @@ export class Schedule {
     startToScheduling: Date
 
     @Column()
-    endToScheduleing: Date
+    endToScheduling: Date
 
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
 
-    @Column()
-    deletedAt: Date
+    @Column({ type: "datetime", nullable: true })
+    deletedAt: Date | null
 }
