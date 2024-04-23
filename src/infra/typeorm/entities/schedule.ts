@@ -1,6 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { UserModel } from "../../../domain/model/user";
-import { RoomModel } from "../../../domain/model/room";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 import { Room } from "./room";
 
@@ -12,10 +10,13 @@ export class Schedule {
     @Column()
     name: string
 
-    @Column()
-    userId: string
+    @ManyToOne(() => User, user => user.id)
+    @JoinColumn({ name: "userId" })
+    userId: string;
 
-    @Column()
+
+    @ManyToOne(() => Room, room => room.id)
+    @JoinColumn({ name: "roomId" })
     roomId: string
 
     @Column()
