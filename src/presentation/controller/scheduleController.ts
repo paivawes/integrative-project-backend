@@ -25,14 +25,14 @@ export class scheduleController {
     async create(req: Request, res: Response) {
         try {
             const { name, userId, roomId, startToScheduling, endToScheduleing } = req.body;
-            const user = scheduleRepository.create({
+            const schedule = scheduleRepository.create({
                 name,
                 userId,
                 roomId,
                 startToScheduling,
                 endToScheduleing
             })
-            const userCreate = scheduleRepository.save(user)
+            const userCreate = scheduleRepository.save(schedule)
             return res.status(201).json(userCreate);
         } catch (error: any) {
             return res.status(error.status).send(error);
