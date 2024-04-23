@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 export class scheduleController {
     async findAll(req: Request, res: Response) {
         try {
-            const schedules = await scheduleRepository.find();
+            const schedules = await scheduleRepository.find({ relations: ["userId", "roomId"] });
 
             return res.status(200).json(schedules)
         } catch (error: any) {
@@ -24,14 +24,15 @@ export class scheduleController {
 
     async create(req: Request, res: Response) {
         try {
-            const { name, userId, roomId, startToScheduling, endToScheduleing } = req.body;
+            const { name, userId, roomId, startToScheduling, endToScheduling } = req.body;
             const schedule = scheduleRepository.create({
                 name,
                 userId,
                 roomId,
                 startToScheduling,
-                endToScheduleing
+                endToScheduling
             })
+            console.log(schedule)
             const userCreate = scheduleRepository.save(schedule)
             return res.status(201).json(userCreate);
         } catch (error: any) {
