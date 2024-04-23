@@ -21,8 +21,8 @@ routes.route('/room/id')
     .get(new RoomController().findById)
 
     routes.route('/schedule')
-    .get(new scheduleController().create)
-    .post(new scheduleController().findAll)
+    .post(new scheduleController().create)
+    .get(new scheduleController().findAll)
 
 routes.route('/schedule/id')
     .get(new scheduleController().findById)
