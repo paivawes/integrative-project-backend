@@ -24,11 +24,11 @@ export class scheduleController {
 
     async create(req: Request, res: Response) {
         try {
-            const { name, userId, roomId, startToScheduling, endToScheduling } = req.body;
+            const { description, userId, roomId, startToScheduling, endToScheduling } = req.body;
             const schedule = scheduleRepository.create({
-                name,
                 userId,
                 roomId,
+                description,
                 startToScheduling,
                 endToScheduling
             })

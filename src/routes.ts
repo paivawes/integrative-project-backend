@@ -8,9 +8,8 @@ import { AuthMiddleware } from "./middleware/AuthMiddleware";
 export const routes = Router();
 
 routes.route('/login')
-    .get(new UserController().login)
-
-routes.use(AuthMiddleware)
+    .post(new UserController().login)
+// routes.use(AuthMiddleware)
 
 routes.route('/user')
     .get(new UserController().findAll)

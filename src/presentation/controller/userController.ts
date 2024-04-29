@@ -17,25 +17,27 @@ export class UserController {
 
     async login(req: Request, res: Response) {
         try {
-            const { email, password, } = req.body;
+            const { email, password } = req.body;
+            
             const user = await userRepository.findOne({ where: { email: email, password: password } })
 
+            console.log(user)
             if (!user) {
                 return res
-                    .status(400)
-                    .json({ message: "E-mail ou senha inválidos." });
+                .status(400)
+                .json({ message: "E-mail ou senha inválidos." });
             }
-
+            
             const token = jwt.sign(
                 {
-                    id: user.id,
+                  id: user.id,
                 },
                 process.env.JWT_PASS ?? "",
                 { expiresIn: "12h" }
-            );
+              );
 
 
-            return res.status(200).json({ user: user, token: token })
+              return res.json({token});
         } catch (error: any) {
             return res.status(error.status).send(error);
         }
