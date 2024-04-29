@@ -6,24 +6,23 @@ import { Room } from "./room";
 export class Schedule {
     @PrimaryGeneratedColumn()
     id: string
-
-    @Column()
-    name: string
-
+    
     @ManyToOne(() => User, user => user.id)
     @JoinColumn({ name: "userId" })
     userId: string;
-
-
+        
     @ManyToOne(() => Room, room => room.id)
     @JoinColumn({ name: "roomId" })
     roomId: string
-
+    
     @Column()
     startToScheduling: Date
-
+    
     @Column()
     endToScheduling: Date
+
+    @Column()
+    description: string
 
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
