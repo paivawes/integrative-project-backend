@@ -6,12 +6,13 @@ import { UserController } from "./presentation/controller/userController";
 
 export const routes = Router();
 
+routes.route('/login')
+    .get(new UserController().login)
+    
 routes.route('/user')
     .get(new UserController().findAll)
     .post(new UserController().create)
 
-routes.route('/user/id')
-    .get(new UserController().findById)
 
 routes.route('/room')
     .get(new RoomController().create)

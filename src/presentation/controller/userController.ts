@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { userRepository } from '../../infra/typeorm/repositories/userRepository';
+import jwt from "jsonwebtoken";
+
 
 export class UserController {
 
@@ -13,12 +15,27 @@ export class UserController {
         }
     }
 
-    async findById(req: Request, res: Response) {
+    async login(req: Request, res: Response) {
         try {
             const { email, password, } = req.body;
-            //teste
             const user = await userRepository.findOne({ where: { email: email, password: password } })
-            return res.status(200).json(user)
+
+            if (!user) {
+                return res
+                    .status(400)
+                    .json({ message: "E-mail ou senha inválidos." });
+            }
+
+            const token = jwt.sign(
+                {
+                    id: user.id,
+                },
+                process.env.JWT_PASS ?? "",
+                { expiresIn: "12h" }
+            );
+
+
+            return res.status(200).json({ user: user, token: token })
         } catch (error: any) {
             return res.status(error.status).send(error);
         }
