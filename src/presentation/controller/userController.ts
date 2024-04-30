@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { userRepository } from '../../infra/typeorm/repositories/userRepository';
 import jwt from "jsonwebtoken";
 
-
 export class UserController {
 
     async findAll(req: Request, res: Response) {
@@ -18,28 +17,21 @@ export class UserController {
     async login(req: Request, res: Response) {
         try {
             const { email, password } = req.body;
-            
+
             const user = await userRepository.findOne({ where: { email: email, password: password } })
 
-            console.log(user)
             if (!user) {
                 return res
-                .status(400)
-                .json({ message: "E-mail ou senha inválidos." });
+                    .status(400)
+                    .json({ message: "E-mail ou senha inválidos." });
             }
-            
-            const token = jwt.sign(
-                {
-                  id: user.id,
-                },
-                process.env.JWT_PASS ?? "",
-                { expiresIn: "12h" }
-              );
 
+            const token = jwt.sign({ id: `${user?.id}` }, process.env.JWT_PASS ?? "", { expiresIn: "12h" });
 
-              return res.json({token});
+            return res.json({ token });
         } catch (error: any) {
-            return res.status(error.status).send(error);
+            const status = error.status || 500;
+            return res.status(status).send(error.message || "Ocorreu um erro interno do servidor.");
         }
     }
 

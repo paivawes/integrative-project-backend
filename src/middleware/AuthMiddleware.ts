@@ -4,7 +4,7 @@ import { userRepository } from "../infra/typeorm/repositories/userRepository";
 import { UnauthorizedError } from "../helper/request-errors";
 
 type JwtPayload = {
-  id: string;
+  id: string
 };
 
 export async function AuthMiddleware(
@@ -18,10 +18,7 @@ export async function AuthMiddleware(
     if (authorization) {
       const token = authorization.split(" ")[1];
 
-      const { id } = jwt.verify(
-        token,
-        process.env.JWT_PASS ?? ""
-      ) as JwtPayload;
+      const { id } = jwt.verify(token, process.env.JWT_PASS ?? "") as JwtPayload
 
       const user = await userRepository.findOneBy({ id });
 
@@ -38,11 +35,10 @@ export async function AuthMiddleware(
 
     next();
   } catch (error: any) {
-    
+
     if (error.statusCode === 401) {
       res.status(401).end()
     } else {
-      // Outros tipos de erro podem ser tratados aqui
       res
         .status(500)
         .json({ message: "Internal Server Error", error: error.message });
