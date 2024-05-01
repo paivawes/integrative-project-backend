@@ -27,6 +27,6 @@ export class Schedule {
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
 
-    @Column({ type: "datetime", nullable: true })
+    @Column({ type: 'timestamptz', nullable: true })
     deletedAt: Date | null
 }
