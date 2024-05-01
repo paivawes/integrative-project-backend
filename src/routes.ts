@@ -9,7 +9,7 @@ export const routes = Router();
 
 routes.route('/login')
     .post(new UserController().login)
-// routes.use(AuthMiddleware)
+routes.use(AuthMiddleware)
 
 routes.route('/user')
     .get(new UserController().findAll)
