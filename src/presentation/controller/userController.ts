@@ -31,7 +31,7 @@ export class UserController {
             return res.json({ token });
         } catch (error: any) {
             const status = error.status || 500;
-            return res.status(status).send(error.message || "Ocorreu um erro interno do servidor.");
+            return res.status(status).send(error.message || "Erro interno do servidor.");
         }
     }
 
@@ -39,13 +39,19 @@ export class UserController {
         try {
             const { name, email, password } = req.body;
 
+            const existingUser = await userRepository.findOne({ where: { email } });
+
+            if (existingUser) {
+                return res.status(400).json({ error: "O email fornecido já está em uso." });
+            }
+
             const user = userRepository.create({
                 name,
                 email,
                 password,
             })
 
-            const userCreate = userRepository.save(user)
+            const userCreate = await userRepository.save(user)
 
             return res.status(201).json(userCreate);
         } catch (error: any) {
