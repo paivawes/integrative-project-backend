@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 import { Room } from "./room";
+import { ScheduleStatusEnum } from "../../../domain/enum/scheduleStatus";
 
 @Entity('schedules')
 export class Schedule {
@@ -23,6 +24,9 @@ export class Schedule {
 
     @Column()
     description: string
+
+    @Column()
+    status: ScheduleStatusEnum
 
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date
