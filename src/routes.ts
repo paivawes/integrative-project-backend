@@ -29,5 +29,6 @@ routes.route('/schedule')
 routes.route('/schedule/id')
     .get(new scheduleController().findById)
     .delete(new scheduleController().deleteById)
+    .put(new scheduleController().update)
 
 

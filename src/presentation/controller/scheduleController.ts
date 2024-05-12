@@ -59,4 +59,27 @@ export class scheduleController {
         }
     }
 
+    async update(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const { description, userId, roomId, startToScheduling, endToScheduling, status } = req.body
+
+            const scheduleUpdate = await scheduleRepository.update(id, {
+                userId,
+                roomId,
+                description,
+                startToScheduling,
+                endToScheduling,
+                status
+            })
+
+            if (!scheduleUpdate) {
+                return res.status(404).json({ error: "Agendamento não encontrado" })
+            }
+
+            return res.status(200).json(scheduleUpdate)
+        } catch (error: any) {
+            return res.status(error.status).send(error)
+        }
+    }
 }
