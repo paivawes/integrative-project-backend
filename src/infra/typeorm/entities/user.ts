@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserTypeEnum } from "../../../domain/enum/userType";
 
 @Entity('users')
 export class User {
@@ -13,6 +14,9 @@ export class User {
 
     @Column()
     password: string
+
+    @Column()
+    type: UserTypeEnum
 
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date

@@ -37,7 +37,7 @@ export class UserController {
 
     async create(req: Request, res: Response) {
         try {
-            const { name, email, password } = req.body;
+            const { name, email, password, type } = req.body;
 
             const existingUser = await userRepository.findOne({ where: { email } });
 
@@ -49,6 +49,7 @@ export class UserController {
                 name,
                 email,
                 password,
+                type
             })
 
             const userCreate = await userRepository.save(user)
