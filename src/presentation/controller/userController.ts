@@ -36,6 +36,7 @@ export class UserController {
     }
 
     async create(req: Request, res: Response) {
+        
         try {
             const { name, email, password, type } = req.body;
 
