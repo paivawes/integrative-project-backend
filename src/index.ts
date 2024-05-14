@@ -8,7 +8,7 @@ AppDataSource.initialize().then(() => {
 
   app.use(express.json());
   
-  app.use(cors());
+  app.use(cors({origin: '*'}));
   app.use(routes);
 
   return app.listen(process.env.PORT);
