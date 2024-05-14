@@ -15,7 +15,7 @@
                 "GET",
                 "POST",
                 "PUT"
-            ],
+            ]
         }
     ],
     "headers": [
