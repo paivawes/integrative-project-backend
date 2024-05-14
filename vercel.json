@@ -20,5 +20,16 @@
                 "Access-Control-Allow-Origin": "*"
             }
         }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Referrer-Policy",
+                    "value": "origin-when-cross-origin"
+                }
+            ]
+        }
     ]
 }
