@@ -25,7 +25,11 @@ export class Schedule {
     @Column()
     description: string
 
-    @Column()
+    @Column({
+        type: 'enum',
+        enum: ScheduleStatusEnum,
+        default: ScheduleStatusEnum.pending
+    })
     status: ScheduleStatusEnum
 
     @Column({ default: () => "CURRENT_TIMESTAMP" })
