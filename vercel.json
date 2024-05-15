@@ -1,5 +1,17 @@
 {
     "version": 2,
+    "rewrites": [],
+    "headers": [
+        {
+            "source": "/*",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "http://localhost:5173"
+                }
+            ]
+        }
+    ],
     "builds": [
         {
             "src": "src/index.ts",
