@@ -9,7 +9,18 @@
     "routes": [
         {
             "src": "(.*)",
-            "dest": "src/index.ts"
+            "dest": "src/index.ts",
+            "methods": [
+                "GET",
+                "POST",
+                "PUT"
+            ]
+        }
+    ],
+    "crons": [
+        {
+            "path": "/api/cron",
+            "schedule": "0 10 * * *"
         }
     ]
 }
