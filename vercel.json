@@ -22,5 +22,18 @@
                 "source": "/(.*)",
                 "destination": "/api"
             }
-        ]
+        ],
+        "headers": [
+            {
+                "source": "/(.*)",
+                "headers": [
+                    {
+                        "key": "Referrer-Policy",
+                        "value": "origin-when-cross-origin"
+                    }
+                ]
+            }
+        ],
+        "cleanUrls": true,
+        "trailingSlash": false
     }
