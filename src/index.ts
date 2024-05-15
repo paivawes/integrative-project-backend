@@ -7,7 +7,7 @@ AppDataSource.initialize().then(() => {
   const app = express();
 
   app.use(express.json());
-  app.use(cors({ origin: 'http://localhost:5173/login' }));
+  app.use(cors());
   app.use(routes);
 
   return app.listen(process.env.PORT);
