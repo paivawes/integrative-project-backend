@@ -9,20 +9,11 @@
     "routes": [
         {
             "src": "(.*)",
-            "status": 301,
-            "headers": {
-                "Location": "http://$1"
-            }
-        }
-    ],
-    "headers": [
-        {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Referrer-Policy",
-                    "value": "origin-when-cross-origin"
-                }
+            "dest": "src/index.ts",
+            "methods": [
+                "GET",
+                "POST",
+                "PUT"
             ]
         }
     ]
