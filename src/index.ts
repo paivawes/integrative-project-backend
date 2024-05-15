@@ -7,12 +7,9 @@ AppDataSource.initialize().then(() => {
   const app = express();
 
   app.use(express.json());
-  app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-  });
-  app.use(cors({origin: '*'}));
+  
+  app.use(cors());
+  app.options('*');
   app.use(routes);
 
   return app.listen(process.env.PORT);
