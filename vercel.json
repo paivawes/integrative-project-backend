@@ -1,28 +1,26 @@
 {
     "version": 2,
-    "rewrites": [],
-    "headers": [
-      {
-        "source": "/",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "http://localhost:5173"
-          }
-        ]
-      }
-    ],
     "builds": [
-      {
-        "src": "src/index.ts",
-        "use": "@vercel/node"
-      }
+        {
+            "src": "./index.js",
+            "use": "@vercel/node"
+        }
     ],
-    "crons": [
-      {
-        "path": "/api/cron",
-        "schedule": "0 10 * * *"
-      }
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "./index.js",
+            "methods": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+            ],
+            "headers": {
+                "Access-Control-Allow-Origin": "*"
+            }
+        }
     ]
-  }
-  
+}
