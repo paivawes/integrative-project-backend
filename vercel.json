@@ -8,12 +8,6 @@
     }
   ],
   "outputDirectory": "build",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/serverless.ts"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
