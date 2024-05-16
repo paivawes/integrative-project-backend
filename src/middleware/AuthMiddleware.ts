@@ -39,6 +39,9 @@ export async function AuthMiddleware(
       throw new UnauthorizedError("Token not provided");
     }
 
+    // Configurando manualmente o cabeçalho Access-Control-Allow-Origin
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+
     next();
   } catch (error: any) {
 
