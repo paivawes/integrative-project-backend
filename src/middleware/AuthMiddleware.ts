@@ -1,5 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userRepository } from "../infra/typeorm/repositories/userRepository";
 import { UnauthorizedError } from "../helper/request-errors";
@@ -7,11 +6,6 @@ import { UnauthorizedError } from "../helper/request-errors";
 type JwtPayload = {
   id: string
 };
-
-const app = express();
-
-// Permitindo que o middleware cors lide com as configurações de CORS automaticamente
-app.use(cors());
 
 export async function AuthMiddleware(
   req: Request,
