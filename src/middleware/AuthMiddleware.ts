@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import jwt from "jsonwebtoken";
 import { userRepository } from "../infra/typeorm/repositories/userRepository";
 import { UnauthorizedError } from "../helper/request-errors";
@@ -6,6 +7,11 @@ import { UnauthorizedError } from "../helper/request-errors";
 type JwtPayload = {
   id: string
 };
+
+const app = express();
+
+// Adicionando o middleware cors para lidar com CORS
+app.use(cors());
 
 export async function AuthMiddleware(
   req: Request,
