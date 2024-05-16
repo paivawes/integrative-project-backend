@@ -10,7 +10,7 @@ type JwtPayload = {
 
 const app = express();
 
-// Adicionando o middleware cors para lidar com CORS
+// Permitindo que o middleware cors lide com as configurações de CORS automaticamente
 app.use(cors());
 
 export async function AuthMiddleware(
@@ -38,9 +38,6 @@ export async function AuthMiddleware(
     } else {
       throw new UnauthorizedError("Token not provided");
     }
-
-    // Configurando manualmente o cabeçalho Access-Control-Allow-Origin
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
 
     next();
   } catch (error: any) {
