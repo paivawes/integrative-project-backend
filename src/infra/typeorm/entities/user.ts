@@ -18,7 +18,7 @@ export class User {
     @Column({
         type: 'enum',
         enum: UserTypeEnum,
-        default: UserTypeEnum.normal
+        default: UserTypeEnum.NORMAL
     })
     type: UserTypeEnum
 

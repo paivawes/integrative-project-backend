@@ -1,6 +1,6 @@
 export enum ScheduleStatusEnum {
-    'approved',
-    'canceled',
-    'pending',
-    'denied'
+    APPROVED = 'approved',
+    CANCELES = 'canceled',
+    PENDING = 'pending',
+    DENIED = 'denied'
 }

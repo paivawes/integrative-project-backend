@@ -28,7 +28,7 @@ export class Schedule {
     @Column({
         type: 'enum',
         enum: ScheduleStatusEnum,
-        default: ScheduleStatusEnum.pending
+        default: ScheduleStatusEnum.PENDING
     })
     status: ScheduleStatusEnum
 
