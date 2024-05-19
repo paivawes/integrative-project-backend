@@ -28,7 +28,7 @@ export class UserController {
 
             const token = jwt.sign({ id: `${user?.id}` }, process.env.JWT_PASS ?? "", { expiresIn: "12h" });
 
-            return res.json({ token });
+            return res.json({ user, token });
         } catch (error: any) {
             const status = error.status || 500;
             return res.status(status).send(error.message || "Erro interno do servidor.");
