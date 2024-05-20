@@ -9,11 +9,14 @@ export const routes = Router();
 
 routes.route('/login')
     .post(new UserController().login)
+
+routes.route('/user')
+    .post(new UserController().create)
+
 routes.use(AuthMiddleware)
 
 routes.route('/user')
     .get(new UserController().findAll)
-    .post(new UserController().create)
 
 routes.route('/room')
     .get(new RoomController().findAll)

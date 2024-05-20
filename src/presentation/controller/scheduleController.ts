@@ -5,34 +5,31 @@ import { LessThanOrEqual, MoreThanOrEqual } from "typeorm";
 export class scheduleController {
     async findAll(req: Request, res: Response) {
         try {
-            const { status, user, startPeriod, endPeriod } = req.query;
-    
-            let query: any = { relations: ["userId", "roomId"] };
-    
-            // Adicionar filtro de status, se presente
+            const { status, user, startPeriod, endPeriod } = req.query
+
+            let query: any = { relations: ["userId", "roomId"] }
+
             if (status) {
-                query.where = { status };
+                query.where = { status }
             }
-    
-            // Adicionar filtro de userId, se presente
+
             if (user) {
-                query.where = { ...query.where, userId: { id: user } };
+                query.where = { ...query.where, userId: { id: user } }
             }
-    
-            // Adicionar filtro por período, se ambos startPeriod e endPeriod estiverem presentes
+
             if (startPeriod && endPeriod) {
                 query.where = {
                     ...query.where,
                     startToScheduling: MoreThanOrEqual(startPeriod),
                     endToScheduling: LessThanOrEqual(endPeriod)
-                };
+                }
             }
-    
-            const schedules = await scheduleRepository.find(query);
-    
-            return res.status(200).json(schedules);
+
+            const schedules = await scheduleRepository.find(query)
+
+            return res.status(200).json(schedules)
         } catch (error: any) {
-            return res.status(error.status || 500).send(error.message);
+            return res.status(error.status || 500).send(error.message)
         }
     }
 
