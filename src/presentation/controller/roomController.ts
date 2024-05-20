@@ -44,4 +44,21 @@ export class RoomController {
         }
     }
 
+    async deleteById(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const room = await roomRepository.findOne({ where: { id } })
+
+            if (!room) {
+                return res.status(404).json({ error: "Sala não encontrado." })
+            }
+
+            const roomDelete = await roomRepository.remove(room)
+
+            return res.status(200).json(roomDelete)
+        } catch (error: any) {
+            return res.status(500).send({ error: "Erro ao processar a solicitação." })
+        }
+    }
+
 }

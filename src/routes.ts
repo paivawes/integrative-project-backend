@@ -17,10 +17,11 @@ routes.route('/user')
 
 routes.route('/room')
     .get(new RoomController().findAll)
-    .post(new RoomController().create)
+    .post(new RoomController().deleteById)
 
 routes.route('/room/id')
     .get(new RoomController().findById)
+    .delete(new RoomController().findById)
 
 routes.route('/schedule')
     .get(new scheduleController().findAll)
