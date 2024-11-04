@@ -29,17 +29,22 @@ export class scheduleController {
 
             return res.status(200).json(schedules)
         } catch (error: any) {
-            return res.status(error.status || 500).send(error.message)
+            return res.status(500).send({ error: 'Erro ao buscar agendamentos.' });
         }
     }
 
     async findById(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const schedule = await scheduleRepository.findOne({ where: { id: id } })
-            return res.status(200).json(schedule)
+            const schedule = await scheduleRepository.findOne({ where: { id } });
+    
+            if (!schedule) {
+                return res.status(404).json({ error: "Agendamento não encontrado." });
+            }
+    
+            return res.status(200).json(schedule);
         } catch (error: any) {
-            return res.status(error.status).send(error)
+            return res.status(500).send({ error: 'Erro ao buscar agendamento.' });
         }
     }
 
@@ -65,18 +70,17 @@ export class scheduleController {
 
     async deleteById(req: Request, res: Response) {
         try {
-            const { id } = req.params
-            const schedule = await scheduleRepository.findOne({ where: { id } })
-
+            const { id } = req.params;
+            const schedule = await scheduleRepository.findOne({ where: { id } });
+    
             if (!schedule) {
-                return res.status(404).json({ error: "Agendamento não encontrado." })
+                return res.status(404).json({ error: "Agendamento não encontrado." });
             }
-
-            const scheduleDelete = await scheduleRepository.remove(schedule)
-
-            return res.status(200).json(scheduleDelete)
+    
+            await scheduleRepository.remove(schedule);
+            return res.status(200).json({ message: "Agendamento removido com sucesso." });
         } catch (error: any) {
-            return res.status(500).send({ error: "Erro ao processar a solicitação." })
+            return res.status(500).send({ error: "Erro ao processar a solicitação." });
         }
     }
 

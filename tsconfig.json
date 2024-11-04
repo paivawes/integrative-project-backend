@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "es6",
     "module": "commonjs",
     "lib": ["es5", "es6", "ES2018"],
     "experimentalDecorators": true,
@@ -12,10 +12,13 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "typeRoots": ["./src/@types"],
+    "typeRoots": ["node_modules/@types"],
     "outDir": "./dist",
     "allowJs": true,
     "strictPropertyInitialization": false,
+    "types": [
+      "jest"
+    ]
   },
   "include": ["src/**/*", "helpers"],
   "exclude": ["node_modules", "dist"],
