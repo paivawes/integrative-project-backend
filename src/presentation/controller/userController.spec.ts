@@ -1,19 +1,14 @@
-import { UserController } from './userController'; // Ajuste o caminho se necessário
+import { UserController } from './userController';
 import { Request, Response } from 'express';
 import { userRepository } from '../../infra/typeorm/repositories/userRepository';
 import jwt from 'jsonwebtoken';
 
-// Mock do repositório de usuários
 jest.mock('../../infra/typeorm/repositories/userRepository');
-
-// Defina a chave secreta diretamente ou use uma variável de ambiente
-const mockSecretKey = 'mocked-secret-key';
 
 const mockRequest = (body = {}, params = {}, query = {}): Partial<Request> => ({
     body,
     params,
     query,
-    // Adicione métodos do Request conforme necessário
     get: jest.fn(),
     header: jest.fn(),
     accepts: jest.fn(),
@@ -32,10 +27,8 @@ describe('UserController', () => {
     let controller: UserController;
 
     beforeEach(() => {
-        controller = new UserController();
-        // Mock do método jwt.sign para usar a chave secreta
-        jest.spyOn(jwt, 'sign').mockImplementation((payload, secret, options) => {
-            return 'mocked-token'; // Retorne um token mockado
+        controller = new UserController();        jest.spyOn(jwt, 'sign').mockImplementation((payload, secret, options) => {
+            return 'mocked-token';
         });
     });
 
@@ -53,22 +46,22 @@ describe('UserController', () => {
     });
 
     it('should login user and return a token', async () => {
-        const req = mockRequest({ email: 'john@example.com', password: 'password' });
+        const req = mockRequest({ email: 'user@example.com', password: 'password' });
         const res = mockResponse();
 
-        const user = { id: 1, email: 'john@example.com', password: 'password' };
+        const user = { id: 1, email: 'user@example.com', password: 'password' };
         (userRepository.findOne as jest.Mock).mockResolvedValue(user);
 
         await controller.login(req as Request, res as Response);
 
-        expect(res.json).toHaveBeenCalledWith({ user, token: 'mocked-token' }); // Verifique o token mockado
+        expect(res.json).toHaveBeenCalledWith({ user, token: 'mocked-token' });
     });
 
     it('should return 400 if login fails', async () => {
-        const req = mockRequest({ email: 'john@example.com', password: 'wrongpassword' });
+        const req = mockRequest({ email: 'user@example.com', password: 'wrongpassword' });
         const res = mockResponse();
 
-        const user = { id: 1, email: 'john@example.com', password: 'password' };
+        const user = { id: 1, email: 'user@example.com', password: 'password' };
         (userRepository.findOne as jest.Mock).mockResolvedValue(user);
 
         await controller.login(req as Request, res as Response);
@@ -78,11 +71,11 @@ describe('UserController', () => {
     });
 
     it('should handle errors during user creation', async () => {
-        const req = mockRequest({ email: 'john@example.com' });
+        const req = mockRequest({ email: 'user@example.com' });
         const res = mockResponse();
 
-        const existingUser = { id: 1, email: 'john@example.com', password: 'password' };
-        (userRepository.findOne as jest.Mock).mockResolvedValue(existingUser); // Simula que o usuário já existe
+        const existingUser = { id: 1, email: 'user@example.com', password: 'password' };
+        (userRepository.findOne as jest.Mock).mockResolvedValue(existingUser);
 
         await controller.create(req as Request, res as Response);
 
@@ -91,11 +84,11 @@ describe('UserController', () => {
     });
 
     it('should create a new user', async () => {
-        const req = mockRequest({ email: 'john@example.com', password: 'password' });
+        const req = mockRequest({ email: 'user@example.com', password: 'password' });
         const res = mockResponse();
 
-        const newUser = { id: 1, email: 'john@example.com', password: 'password' };
-        (userRepository.findOne as jest.Mock).mockResolvedValue(null); // Simula que o usuário não existe
+        const newUser = { id: 1, email: 'user@example.com', password: 'password' };
+        (userRepository.findOne as jest.Mock).mockResolvedValue(null); 
         (userRepository.save as jest.Mock).mockResolvedValue(newUser);
 
         await controller.create(req as Request, res as Response);

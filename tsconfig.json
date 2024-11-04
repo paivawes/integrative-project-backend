@@ -17,7 +17,6 @@
     "allowJs": true,
     "strictPropertyInitialization": false,
     "types": [
-      "mocha",
       "jest"
     ]
   },
