@@ -16,7 +16,7 @@ describe('Schedule Entity', () => {
     schedule.roomId = room.id;
     schedule.startToScheduling = new Date('2024-10-30T10:00:00');
     schedule.endToScheduling = new Date('2024-10-30T12:00:00');
-    schedule.description = 'Project Meeting';
+    schedule.description = 'Prova Univesp';
     schedule.status = ScheduleStatusEnum.PENDING;
     schedule.createdAt = new Date();
     schedule.deletedAt = null;
@@ -26,7 +26,7 @@ describe('Schedule Entity', () => {
     expect(schedule.roomId).toBe(room.id);
     expect(schedule.startToScheduling).toBeInstanceOf(Date);
     expect(schedule.endToScheduling).toBeInstanceOf(Date);
-    expect(schedule.description).toBe('Project Meeting');
+    expect(schedule.description).toBe('Prova Univesp');
     expect(schedule.status).toBe(ScheduleStatusEnum.PENDING);
     expect(schedule.createdAt).toBeInstanceOf(Date);
     expect(schedule.deletedAt).toBeNull();

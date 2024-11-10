@@ -22,7 +22,7 @@ describe('RoomController', () => {
 
     describe('findAll', () => {
         it('should return all rooms', async () => {
-            const rooms: Room[] = [{ id: '1', name: 'Conference Room', capacity: 20, createdAt: new Date() }];
+            const rooms: Room[] = [{ id: '1', name: 'Sala 1', capacity: 20, createdAt: new Date() }];
             (roomRepository.find as jest.Mock).mockResolvedValue(rooms);
 
             await roomController.findAll(req as Request, res as Response);
@@ -43,7 +43,7 @@ describe('RoomController', () => {
 
     describe('findById', () => {
         it('should return a room by ID', async () => {
-            const room: Room = { id: '1', name: 'Conference Room', capacity: 20, createdAt: new Date() };
+            const room: Room = { id: '1', name: 'Sala 1', capacity: 20, createdAt: new Date() };
             req.params = { id: '1' };
             (roomRepository.findOne as jest.Mock).mockResolvedValue(room);
 

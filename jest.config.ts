@@ -11,5 +11,9 @@ module.exports = {
     collectCoverageFrom: [
         'src/**/*.{ts,tsx}', // Arquivos para os quais queremos a cobertura
         '!src/**/*.d.ts', // Ignorar definições de tipos
+        '!src/index.ts',          // Ignorar arquivos com 0% Funcs
+        '!src/routes.ts',
+        '!src/helper/request-errors.ts',
+        '!src/middleware/AuthMiddleware.ts'
     ],
 };

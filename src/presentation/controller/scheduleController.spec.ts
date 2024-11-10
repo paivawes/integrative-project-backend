@@ -25,19 +25,19 @@ describe('ScheduleController', () => {
         const req = mockRequest();
         const res = mockResponse();
 
-        (scheduleRepository.find as jest.Mock).mockResolvedValue([{ id: 1, description: 'Meeting' }]);
+        (scheduleRepository.find as jest.Mock).mockResolvedValue([{ id: 1, description: 'Prova' }]);
 
         await controller.findAll(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith([{ id: 1, description: 'Meeting' }]);
+        expect(res.json).toHaveBeenCalledWith([{ id: 1, description: 'Prova' }]);
     });
 
     it('should return a 404 error if schedule not found by ID', async () => {
         const req = mockRequest({ id: '1' });
         const res = mockResponse();
 
-        (scheduleRepository.findOne as jest.Mock).mockResolvedValue(null); // Simula que não encontrou
+        (scheduleRepository.findOne as jest.Mock).mockResolvedValue(null);
 
         await controller.findById(req, res);
 
@@ -49,17 +49,17 @@ describe('ScheduleController', () => {
         const req = mockRequest({ id: '1' });
         const res = mockResponse();
 
-        (scheduleRepository.findOne as jest.Mock).mockResolvedValue({ id: 1, description: 'Meeting' });
+        (scheduleRepository.findOne as jest.Mock).mockResolvedValue({ id: 1, description: 'Prova' });
 
         await controller.findById(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ id: 1, description: 'Meeting' });
+        expect(res.json).toHaveBeenCalledWith({ id: 1, description: 'Prova' });
     });
 
     it('should create a new schedule', async () => {
         const req = mockRequest({}, {
-            description: 'Meeting',
+            description: 'Prova',
             userId: 1,
             roomId: 1,
             startToScheduling: new Date(),
@@ -81,7 +81,7 @@ describe('ScheduleController', () => {
         const req = mockRequest({ id: '1' });
         const res = mockResponse();
 
-        (scheduleRepository.findOne as jest.Mock).mockResolvedValue({ id: 1, description: 'Meeting' });
+        (scheduleRepository.findOne as jest.Mock).mockResolvedValue({ id: 1, description: 'Prova' });
         (scheduleRepository.remove as jest.Mock).mockResolvedValue(undefined); // Simula a remoção
 
         await controller.deleteById(req, res);
@@ -94,7 +94,7 @@ describe('ScheduleController', () => {
         const req = mockRequest({ id: '1' });
         const res = mockResponse();
 
-        (scheduleRepository.findOne as jest.Mock).mockResolvedValue(null); // Simula que não encontrou
+        (scheduleRepository.findOne as jest.Mock).mockResolvedValue(null);
 
         await controller.deleteById(req, res);
 
